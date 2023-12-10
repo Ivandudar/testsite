@@ -1,0 +1,231 @@
+@import "normalize";
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+a{
+  cursor: pointer;
+}
+header, main, footer {
+  padding: 30px 0 0 0;
+}
+header{
+  height: 100vh;
+  width: 23%;
+  padding: 30px;
+  border-right: 2px solid #eff3f4;
+  position: fixed;
+  left: 0;
+}
+main{
+  width: 55%;
+}
+footer{
+  width: 23%;
+  border-left: 2px solid #eff3f4;
+  position: fixed;
+  height: 100vh;
+  right: 0;
+}
+.pop_up{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+}
+.pop_up.active{
+  display: block;
+}
+.pop_up_container{
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.pop_up_body{
+  margin: auto;
+  width: 500px;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  padding: 100px 15px 110px 15px;
+  position: relative;
+}
+.msg{
+
+}
+.logo{
+  padding: 0 0 20px 0;
+}
+.menu{
+  padding: 0;
+  margin: 0;
+}
+.menu_item{
+  padding: 0 0 30px 0;
+}
+.menu_text{
+  padding-left: 20px;
+  font-size: 22px;
+  color: black;
+
+}
+.sign_container{
+  display: inline-grid;
+  width: 100%;
+}
+.user_info{
+  display: flex;
+  padding: 0 0 20px 0;
+}
+.surname{
+  padding: 0 10px;
+}
+.button_container{
+  width: 100%;
+}
+.button{
+  background-color: #1d9bf0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  padding: 20px 0;
+  margin: 15px 0;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.posting_container{
+  width: 100%;
+}
+.posting_form{
+  display: inline-grid;
+  width: 100%;
+}
+.post_tittle{
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  border-bottom: 2px solid #eff3f4;
+  padding: 0 0 20px 0;
+}
+.post_area{
+  margin-left: 40px;
+  border-bottom: 2px solid #eff3f4;
+  width: 90%;
+  resize: none;
+  overflow-y: hidden;
+  min-height: 60px;
+font-size: 22px;
+}
+.button_wrapper{
+
+}
+.post_button{
+  float: right;
+  margin-right: 20px;
+  width: 70px;
+  border-radius: 18px;
+  padding: 10px 0;
+
+}
+.post{
+  padding: 40px 60px;
+  border-top: 2px solid #eff3f4;
+}
+.user_info{
+  font-weight: bold;
+  font-size: 22px;
+}
+
+
+.footer_wrapper{
+  position: relative;
+  margin-left: 30px;
+}
+.premium{
+  background-color: #F1F1F1;
+  padding: 10px 20px;
+}
+.premium_title{
+  font-weight: bold;
+  font-size: 22px;
+}
+.premium_text{
+  margin-right: 50px;
+}
+.premium_button{
+  background-color: black;
+  max-width: 150px;
+}
+.footer_ul{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 40px;
+  position: fixed;
+  bottom: 0;
+}
+.footer_li{
+  padding: 10px 5px 5px 0;
+}
+.button_pop_up{
+  max-width: 300px;
+  display: block;
+  margin: auto;
+}
+.pop_up_form{
+  display: flex;
+  flex-direction: column;
+}
+.input{
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #eff3f4;
+  font-size: 20px;
+}
+.close_pop_up{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+}
+.pop_up_title{
+  font-size: 22px;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+.button_edit{
+ width: 100px;
+  display: block;
+}
+.edit_wrapper{
+  display: flex;
+  flex-direction: column;
+}
+.premium_title{
+  margin: auto;
+  padding-bottom: 40px;
+}
+.edit_area{
+  min-height: 500px;
+  border: 2px solid #eff3f4;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 40px;
+}
+.edit_submit_button{
+  display: block;
+  width: 50%;
+  margin: auto;
+}
+.posts_title{
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 50px;
+}

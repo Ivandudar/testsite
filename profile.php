@@ -1,0 +1,237 @@
+<?php
+session_start();
+?>
+
+<head>
+<link href="dist/css/main.css" rel="stylesheet">
+</head>
+
+
+<body>
+<div class="container">
+    <header class="header">
+        <div class="logo">
+            <a href="/" class="logo_link">
+                <img src="src/img/logo.png" width="40" height="40">
+            </a>
+        </div>
+        <ul class="menu">
+            <li class="menu_item">
+                <a href="/" class="menu_link">
+                    <img src="src/img/home.svg" class="menu_img" height="26" width="26">
+                    <span class="menu_text">
+                    Home
+                </span>
+                </a>
+            </li>
+            <li class="menu_item">
+                <a class="menu_link">
+                    <img src="src/img/search.png" class="menu_img" height="26" width="26">
+                    <span class="menu_text">
+                    Explore
+                </span>
+                </a>
+            </li>
+            <li class="menu_item">
+                <a class="menu_link">
+                    <img src="src/img/Notifications.png" class="menu_img" height="26" width="26">
+                    <span class="menu_text">
+                    Notifications
+                </span>
+                </a>
+            </li>
+            <li class="menu_item">
+                <a class="menu_link">
+                    <img src="src/img/Messages.png" class="menu_img" height="26" width="26">
+                    <span class="menu_text">
+                    Messages
+                </span>
+                </a>
+            </li>
+            <li class="menu_item">
+                <a class="menu_link">
+                    <img src="src/img/Lists.png" class="menu_img" height="26" width="26">
+                    <span class="menu_text">
+                    Lists
+                </span>
+                </a>
+            </li>
+            <li class="menu_item">
+                <a class="menu_link">
+                    <img src="src/img/Communities.png" class="menu_img" height="26" width="26">
+                    <span class="menu_text">
+                    Communities
+                </span>
+                </a>
+            </li>
+            <li class="menu_item">
+                <a class="menu_link">
+                    <img src="src/img/logo.png" class="menu_img" height="26" width="26">
+                    <span class="menu_text">
+                    Premium
+                </span>
+                </a>
+            </li>
+            <li class="menu_item">
+                <a class="menu_link" href="profile.php">
+                    <img src="src/img/Profile.png" class="menu_img" height="26" width="26">
+                    <span class="menu_text">
+                 My posts
+                </span>
+                </a>
+            </li>
+            <li class="menu_item">
+                <a class="menu_link">
+                    <img src="src/img/More.png" class="menu_img" height="26" width="26">
+                    <span class="menu_text">
+                    More
+                </span>
+                </a>
+            </li>
+        </ul>
+        <div class="button_container">
+
+        </div>
+        <div class="sign_container">
+
+            <?php
+            if (isset($_SESSION['user'])){
+                echo '
+            <a class="button" id="exit" href="vendor/logout.php">
+                Exit
+            </a> ';
+            }
+            else{
+                echo '<button class="button" id="open_sign_in">
+                Sign in
+            </button>
+            <button class="button" id="open_sign_up" >
+                Sign up
+            </button>';
+            }
+            ?>
+        </div>
+    </header>
+    <main>
+        <h2 class="posts_title">Your posts</h2>
+        <?php
+
+        // Перевірка чи авторизований користувач
+        if(isset($_SESSION['user']['id'])) {
+            require_once "vendor/connect.php";
+
+            $userId = $_SESSION['user']['id'];
+
+            // SQL-запит для виведення постів лише для авторизованого користувача
+            $sql = "SELECT users.name, users.surname, user_posts.created_at, user_posts.post_content, user_posts.post_id
+        FROM user_posts 
+        INNER JOIN users ON user_posts.user_id = users.id 
+        WHERE user_posts.user_id = $userId
+        ORDER BY user_posts.created_at DESC";
+
+            $result = mysqli_query($connect, $sql);
+
+            if (!$result) {
+                echo "Error: " . mysqli_error($connect);
+            } else {
+                // Вивід даних про кожен пост
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo '<div class="post">';
+                    echo '<div class="user_info">';
+                    echo '<div class="name">' . $row["name"] . '</div>';
+                    echo '<div class="surname">' . $row["surname"] . '</div>';
+                    echo '<div class="published_at">' . "Published at: " . $row["created_at"] . '</div>';
+                    echo '</div>'; // Закриття блоку user_info
+                    echo '<div class="post_content">' . $row["post_content"] . '</div>';
+                    echo '<a class="button_edit button" href="vendor/edit_post.php?post_id=' . $row['post_id'] . '">EDIT</a>';
+                    echo '</div>'; // Закриття блоку post
+                }
+            }
+            mysqli_close($connect);
+        } else {
+            echo "Користувач не авторизований!";
+        }
+
+        ?>
+
+    </main>
+    <footer class="footer">
+        <div class="footer_wrapper">
+            <div class="premium">
+                <h3 class="premium_title">Subscribe to Premium</h3>
+                <p class="premium_text">Subscribe to unlock new features and if eligible, receive a share of ads revenue.</p>
+                <button class="button premium_button">Subscribe</button>
+            </div>
+            <div class="footer_block">
+                <ul class="footer_ul">
+                    <li class="footer_li">
+                        <a class="footer_li_a">
+                            Terms of Service
+                        </a>
+                    </li>
+                    <li class="footer_li">
+                        <a class="footer_li_a">
+                            Privacy Policy
+                        </a>
+                    </li>
+                    <li class="footer_li">
+                        <a class="footer_li_a">
+                            Cookie Policy
+                        </a>
+                    </li>
+                    <li class="footer_li">
+                        <a class="footer_li_a">
+                            Accessibility
+                        </a>
+                    </li>
+                    <li class="footer_li">
+                        <a class="footer_li_a">
+                            Ads info
+                        </a>
+                    </li>
+                    <li class="footer_li">
+                        <a class="footer_li_a">
+                            More
+                        </a>
+                    </li>
+                    <li class="footer_li">
+                        © 2023 X Corp
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+<div class="pop_up" id="pop_up_sign_in">
+    <div class="pop_up_container">
+        <div class="pop_up_body">
+            <form class="pop_up_form" action="vendor/signin.php" method="post">
+                <span class="pop_up_title">Log in</span>
+                <input class="input" type="text" placeholder="Email" name="email">
+                <input class="input" type="password" placeholder="Password" name="password">
+                <button class="button button_pop_up" type="submit">Sign in</button>
+            </form>
+            <img src="src/img/close.png" width="30" height="30" class="close_pop_up" id="close_sign_in">
+        </div>
+    </div>
+</div>
+
+<div class="pop_up" id="pop_up_sign_up">
+    <div class="pop_up_container">
+        <div class="pop_up_body">
+            <form class="pop_up_form" action="vendor/signup.php" method="post" >
+                <span class="pop_up_title">Create an account</span>
+                <input class="input" type="text" placeholder="Name" name="name">
+                <input class="input" type="text" placeholder="Surname" name="surname">
+                <input class="input" type="email" placeholder="Email" name="email">
+                <input class="input" type="password" placeholder="Password" name="password">
+                <button class="button button_pop_up" type="submit">Sign up</button>
+            </form>
+            <img src="src/img/close.png" width="30" height="30" class="close_pop_up" id="close_sign_up">
+        </div>
+    </div>
+</div>
+<script src="src/js/main.js"></script>
+</body>
