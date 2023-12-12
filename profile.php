@@ -90,71 +90,18 @@ session_start();
             </li>
         </ul>
         <div class="button_container">
-
         </div>
         <div class="sign_container">
-
-            <?php
-            if (isset($_SESSION['user'])){
-                echo '
-            <a class="button" id="exit" href="vendor/logout.php">
-                Exit
-            </a> ';
-            }
-            else{
-                echo '<button class="button" id="open_sign_in">
-                Sign in
-            </button>
-            <button class="button" id="open_sign_up" >
-                Sign up
-            </button>';
-            }
-            ?>
+            <?php include 'vendor/sign_buttons.php'; ?>
         </div>
     </header>
     <main>
         <h2 class="posts_title">Your posts</h2>
         <?php
-
-        // Перевірка чи авторизований користувач
-        if(isset($_SESSION['user']['id'])) {
-            require_once "vendor/connect.php";
-
-            $userId = $_SESSION['user']['id'];
-
-            // SQL-запит для виведення постів лише для авторизованого користувача
-            $sql = "SELECT users.name, users.surname, user_posts.created_at, user_posts.post_content, user_posts.post_id
-        FROM user_posts 
-        INNER JOIN users ON user_posts.user_id = users.id 
-        WHERE user_posts.user_id = $userId
-        ORDER BY user_posts.created_at DESC";
-
-            $result = mysqli_query($connect, $sql);
-
-            if (!$result) {
-                echo "Error: " . mysqli_error($connect);
-            } else {
-                // Вивід даних про кожен пост
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="post">';
-                    echo '<div class="user_info">';
-                    echo '<div class="name">' . $row["name"] . '</div>';
-                    echo '<div class="surname">' . $row["surname"] . '</div>';
-                    echo '<div class="published_at">' . "Published at: " . $row["created_at"] . '</div>';
-                    echo '</div>'; // Закриття блоку user_info
-                    echo '<div class="post_content">' . $row["post_content"] . '</div>';
-                    echo '<a class="button_edit button" href="vendor/edit_post.php?post_id=' . $row['post_id'] . '">EDIT</a>';
-                    echo '</div>'; // Закриття блоку post
-                }
-            }
-            mysqli_close($connect);
-        } else {
-            echo "Користувач не авторизований!";
-        }
-
+        include 'vendor/get_user_posts.php';
         ?>
-
     </main>
+
     <footer class="footer">
         <div class="footer_wrapper">
             <div class="premium">
