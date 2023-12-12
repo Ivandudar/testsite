@@ -1,9 +1,5 @@
 <?php
 session_start();
-
-
-
-// Функція для перевірки успішності реєстрації та редиректу
 ?>
 
 <head>
@@ -96,23 +92,7 @@ session_start();
 
         </div>
         <div class="sign_container">
-
-            <?php
-            if (isset($_SESSION['user'])){
-              echo '
-            <a class="button" id="exit" href="vendor/logout.php">
-                Exit
-            </a> ';
-            }
-            else{
-                echo '<button class="button" id="open_sign_in">
-                Sign in
-            </button>
-            <button class="button" id="open_sign_up" >
-                Sign up
-            </button>';
-            }
-            ?>
+            <?php include 'vendor/sign_buttons.php'; ?>
         </div>
     </header>
 
@@ -125,39 +105,12 @@ session_start();
             </form>
         </div>
         <div class="content">
-            <?php
-            require_once "vendor/connect.php";
-
-            // Вибрати дані з обох таблиць (users та user_posts) за допомогою JOIN
-            $sql = "SELECT users.name, users.surname, user_posts.created_at, user_posts.post_content 
-    FROM user_posts 
-    INNER JOIN users ON user_posts.user_id = users.id 
-    ORDER BY user_posts.created_at DESC"; // Сортування за часом публікації у зворотньому порядку
-
-            $result = mysqli_query($connect, $sql);
-
-            if (!$result) {
-                echo "Error: " . mysqli_error($connect);
-            } else {
-                // Вивід даних про кожен пост
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="post">';
-                    echo '<div class="user_info">';
-                    echo '<div class="name">' . $row["name"] . '</div>';
-                    echo '<div class="surname">' . $row["surname"] . '</div>';
-                    echo '<div class="published_at">' . "Published at: " . $row["created_at"] . '</div>';
-                    echo '</div>'; // Закриття блоку user_info
-                    echo '<div class="post_content">' . $row["post_content"] . '</div>';
-                    echo '</div>'; // Закриття блоку post
-                }
-            }
-            mysqli_close($connect);
-            ?>
+                <div class="posts-container">
+                    <?php include 'vendor/display_posts.php'; ?>
+                </div>
         </div>
-
     </main>
-
-    <footer class="footer">
+        <footer class="footer">
        <div class="footer_wrapper">
            <div class="premium">
                <h3 class="premium_title">Subscribe to Premium</h3>
